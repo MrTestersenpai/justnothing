@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubble Popper</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #1a1a1a;
+      color: #fff;
+      cursor: crosshair;
+    }
+
+    .bubble {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #ff7f50; /* Orange color */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      user-select: none; /* Disable text selection on bubbles */
+    }
+
+    #score-display {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+    }
+
+    #timer-display {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="score-display">Score: <span id="score">0</span></h1>
+  <h1 id="timer-display">Time: <span id="timer">60</span>s</h1>
+  <div class="bubble-container"></div>
+  <script>
+    let score = 0;
+    let time = 60;
+    const scoreDisplay = document.getElementById("score");
+    const timerDisplay = document.getElementById("timer");
+
+    function playPopSound() {
+      new Audio("pop.mp3").play();
+    }
+
+    function createBubble() {
+      if (time <= 0) {
+        clearInterval(bubbleInterval);
+        return;
+      }
+
+      const bubbleElement = document.createElement("div");
+      bubbleElement.classList.add("bubble");
+
+      const startPosX = Math.random() * window.innerWidth;
+      const startPosY = window.innerHeight + 50;
+
+      bubbleElement.style.left = `${startPosX}px`;
+      bubbleElement.style.top = `${startPosY}px`;
+
+      bubbleElement.textContent = '🔵'; // Bubble emoji
+
+      document.body.appendChild(bubbleElement);
+
+      function moveBubble() {
+        const speed = 1 + Math.random() * 3;
+        const currentPosY = parseFloat(bubbleElement.style.top);
+        bubbleElement.style.top = `${currentPosY - speed}px`;
+
+        if (currentPosY <= -50) {
+          // Check if the bubble is still in the DOM before removing
+          if (bubbleElement.parentNode) {
+            document.body.removeChild(bubbleElement);
+            // Decrease score for missed bubbles
+            if (!bubbleElement.popped) {
+              score = Math.max(0, score - 5);
+              scoreDisplay.textContent = score;
+            }
+          }
+        } else {
+          requestAnimationFrame(moveBubble);
+        }
+      }
+
+      bubbleElement.addEventListener("click", function () {
+        // Check if the bubble is still in the DOM before popping
+        if (bubbleElement.parentNode) {
+          // Give a chance for the bubble not to pop
+          if (Math.random() > 0.2) {
+            bubbleElement.popped = true;
+            bubbleElement.style.backgroundColor = "#fff"; // Change color when popped
+            bubbleElement.style.opacity = "0"; // Fade out effect
+            setTimeout(() => {
+              if (bubbleElement.parentNode) {
+                document.body.removeChild(bubbleElement);
+                score += 10; // Increase score for popped bubbles
+                scoreDisplay.textContent = score;
+              }
+            }, 200); // Remove the bubble after 200ms (adjust to your preference)
+            playPopSound();
+          } else {
+            bubbleElement.popped = false;
+          }
+        }
+      });
+
+      requestAnimationFrame(moveBubble);
+    }
+
+    const bubbleInterval = setInterval(createBubble, 2000);
+
+    function updateTimer() {
+      time--;
+      timerDisplay.textContent = time + "s";
+      if (time <= 0) {
+        clearInterval(timerInterval);
+      }
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
