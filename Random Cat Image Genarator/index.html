@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Cat Image Viewer</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1a1a1a;
+    margin: 0;
+}
+
+.cat-container {
+    text-align: center;
+    padding: 30px;
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+}
+
+.cat-container h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #0084ff;
+}
+
+.cat-container img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.cat-container button {
+    padding: 10px 20px;
+    background-color: #0084ff;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cat-container button:hover {
+    background-color: #005fb2;
+}
+
+.cat-container button:focus {
+    outline: none;
+}
+
+.cat-container button:active {
+    background-color: #005090;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="cat-container">
+        <h1>Random Cat Image Viewer</h1>
+        <img id="cat-image" src="" alt="Random Cat Image">
+        <button onclick="loadRandomCatImage()">Load Random Cat</button>
+    </div>
+
+    <script>
+        function loadRandomCatImage() {
+    const catImage = document.getElementById('cat-image');
+    const apiKey = 'live_yZylUzeYNtS1V513JZ2ZoSdTFV0kXWPPpwLMuVLUgQxlhnJmUwSe6CJorImmtyA7'; // Replace this with your own API key from TheCatAPI (https://thecatapi.com/)
+
+    fetch('https://api.thecatapi.com/v1/images/search', {
+        headers: {
+            'x-api-key': apiKey
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const imageUrl = data[0].url;
+        catImage.src = imageUrl;
+    })
+    .catch(error => console.log('Error fetching cat image:', error));
+}
+
+    </script>
+</body>
+</html>
