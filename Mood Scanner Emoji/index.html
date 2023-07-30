@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emoji Mood Scanner</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+    margin: 0;
+}
+
+.scanner-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.scanner-container h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.scanner-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.scanner-container input {
+    padding: 8px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #444444;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.scanner-container button {
+    padding: 10px 20px;
+    background-color: #0084ff;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.scanner-container button:hover {
+    background-color: #005fb2;
+}
+
+#result-container {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="scanner-container">
+        <h1>Emoji Mood Scanner</h1>
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" placeholder="Your Name">
+
+        <button onclick="scanMood()">Scan Mood</button>
+
+        <div id="result-container"></div>
+    </div>
+
+    <script>
+        const emojis = ['😄', '😍', '😂', '😎', '😢', '😡', '🥳', '🤔', '😴', '😋'];
+const moods = ['Happy', 'In Love', 'Laughing', 'Cool', 'Sad', 'Angry', 'Excited', 'Thoughtful', 'Sleepy', 'Hungry'];
+
+function getRandomIndex(array) {
+    return Math.floor(Math.random() * array.length);
+}
+
+function scanMood() {
+    const name = document.getElementById('name').value;
+    const resultContainer = document.getElementById('result-container');
+    const randomIndex = getRandomIndex(emojis);
+    const randomEmoji = emojis[randomIndex];
+    const mood = moods[randomIndex];
+
+    resultContainer.innerHTML = `<p>${name}'s mood is: <span>${randomEmoji}</span> (${mood})</p>`;
+}
+
+    </script>
+</body>
+</html>
