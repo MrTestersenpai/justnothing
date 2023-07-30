@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Brain Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #game-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 2px solid #333;
+      margin: 0 auto;
+    }
+
+    .circle {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: red;
+      cursor: pointer;
+    }
+
+    #score {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    #message {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tap Game</h1>
+  <div id="game-container">
+    <!-- Circles will be generated here -->
+  </div>
+  <div id="score">Score: 0</div>
+  <button onclick="startGame()">Start Game</button>
+  <p id="message"></p>
+
+  <script>
+    const gameContainer = document.getElementById('game-container');
+    const scoreDisplay = document.getElementById('score');
+    const message = document.getElementById('message');
+    let score = 0;
+    let isGameStarted = false;
+    const timeLimit = 30; // Adjust the time limit in seconds
+    const circleColors = ['#FF5733', '#33FF57', '#5733FF', '#FF33C2', '#33C2FF'];
+
+    gameContainer.addEventListener('click', (event) => {
+      if (isGameStarted && event.target.classList.contains('circle')) {
+        event.target.remove();
+        score++;
+        scoreDisplay.textContent = `Score: ${score}`;
+      }
+    });
+
+    function createRandomCircle() {
+      const circle = document.createElement('div');
+      const color = circleColors[Math.floor(Math.random() * circleColors.length)];
+
+      circle.classList.add('circle');
+      circle.style.backgroundColor = color;
+      circle.style.top = `${Math.random() * 250}px`;
+      circle.style.left = `${Math.random() * 250}px`;
+
+      gameContainer.appendChild(circle);
+
+      setTimeout(() => {
+        circle.remove();
+      }, timeLimit * 1000);
+    }
+
+    function startGame() {
+      if (!isGameStarted) {
+        isGameStarted = true;
+        score = 0;
+        scoreDisplay.textContent = 'Score: 0';
+        message.textContent = '';
+
+        const gameInterval = setInterval(() => {
+          createRandomCircle();
+        }, 1000);
+
+        setTimeout(() => {
+          clearInterval(gameInterval);
+          isGameStarted = false;
+          message.textContent = `Game Over! Your final score is ${score}.`;
+        }, timeLimit * 1000);
+      }
+    }
+  </script>
+</body>
+</html>
