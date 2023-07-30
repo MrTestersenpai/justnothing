@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #333;
+      color: #fff;
+    }
+
+    #game-container {
+      text-align: center;
+      max-width: 400px;
+      padding: 20px;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      background-color: #1f1f1f;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .option {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #444;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    #reset-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #444;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #reset-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h2>Rock Paper Scissors</h2>
+    <div class="options">
+      <div class="option" onclick="play('rock')">Rock</div>
+      <div class="option" onclick="play('paper')">Paper</div>
+      <div class="option" onclick="play('scissors')">Scissors</div>
+    </div>
+    <p id="result"></p>
+    <button id="reset-button" onclick="resetGame()">Play Again</button>
+  </div>
+
+  <script>
+    const options = ["rock", "paper", "scissors"];
+
+    function getRandomOption() {
+      const randomIndex = Math.floor(Math.random() * options.length);
+      return options[randomIndex];
+    }
+
+    function play(userOption) {
+      const computerOption = getRandomOption();
+
+      let result;
+      if (userOption === computerOption) {
+        result = "It's a tie!";
+      } else if (
+        (userOption === "rock" && computerOption === "scissors") ||
+        (userOption === "paper" && computerOption === "rock") ||
+        (userOption === "scissors" && computerOption === "paper")
+      ) {
+        result = "You win!";
+      } else {
+        result = "Computer wins!";
+      }
+
+      document.getElementById("result").innerText = `You chose ${userOption}. Computer chose ${computerOption}. ${result}`;
+    }
+
+    function resetGame() {
+      document.getElementById("result").innerText = "";
+    }
+  </script>
+</body>
+</html>
