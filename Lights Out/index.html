@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lights Out</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: #222222;
+      color: #ffffff;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(5, 50px); /* Adjust the grid size as desired */
+      gap: 3px;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .light-button {
+      width: 50px;
+      height: 50px;
+      background-color: #ffdd59;
+      border: 2px solid #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #222222;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lights Out</h1>
+  <div class="game-container" id="gameContainer">
+    <!-- Light buttons will be generated here -->
+  </div>
+  <br>
+  <button onclick="resetGame()">Reset Game</button>
+
+  <script>
+    const gridSize = 5; // Adjust grid size as desired
+    const gameContainer = document.getElementById('gameContainer');
+    let lights = [];
+
+    function initializeGame() {
+      // Generate an empty grid of lights (all lights are initially off)
+      for (let i = 0; i < gridSize; i++) {
+        lights.push([]);
+        for (let j = 0; j < gridSize; j++) {
+          lights[i].push(false);
+        }
+      }
+
+      // Randomly turn on some lights to create an initial puzzle
+      for (let i = 0; i < gridSize * gridSize; i++) {
+        if (Math.random() < 0.5) {
+          const row = Math.floor(i / gridSize);
+          const col = i % gridSize;
+          toggleLight(row, col);
+        }
+      }
+
+      // Generate light buttons in the game container
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          const lightButton = document.createElement('div');
+          lightButton.classList.add('light-button');
+          lightButton.dataset.row = i;
+          lightButton.dataset.col = j;
+          lightButton.addEventListener('click', handleLightClick);
+          updateLightButton(lightButton, i, j);
+          gameContainer.appendChild(lightButton);
+        }
+      }
+    }
+
+    function updateLightButton(lightButton, row, col) {
+      if (lights[row][col]) {
+        lightButton.style.backgroundColor = '#ffdd59';
+        lightButton.style.color = '#000000';
+      } else {
+        lightButton.style.backgroundColor = '#000000';
+        lightButton.style.color = '#ffffff';
+      }
+    }
+
+    function toggleLight(row, col) {
+      lights[row][col] = !lights[row][col];
+    }
+
+    function handleLightClick(event) {
+      const row = parseInt(event.target.dataset.row);
+      const col = parseInt(event.target.dataset.col);
+
+      toggleLight(row, col);
+
+      // Toggle the neighboring lights
+      if (row > 0) toggleLight(row - 1, col);
+      if (row < gridSize - 1) toggleLight(row + 1, col);
+      if (col > 0) toggleLight(row, col - 1);
+      if (col < gridSize - 1) toggleLight(row, col + 1);
+
+      // Update the light button colors
+      const lightButtons = document.querySelectorAll('.light-button');
+      lightButtons.forEach((button) => {
+        const row = parseInt(button.dataset.row);
+        const col = parseInt(button.dataset.col);
+        updateLightButton(button, row, col);
+      });
+
+      // Check if all lights are turned off
+      const allLightsOff = lights.every((row) => row.every((light) => !light));
+      if (allLightsOff) {
+        alert('Congratulations! You turned off all the lights.');
+        resetGame();
+      }
+    }
+
+    function resetGame() {
+      // Clear the game container
+      gameContainer.innerHTML = '';
+      lights = [];
+
+      // Reinitialize the game
+      initializeGame();
+    }
+
+    // Initialize the game when the page loads
+    initializeGame();
+  </script>
+</body>
+</html>
