@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fortune Teller Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    p {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      margin-top: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4285F4;
+      color: #fff;
+    }
+    #fortune {
+      font-size: 20px;
+      margin-top: 20px;
+      animation: fadeIn 1s;
+    }
+    #resetBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #ea4335;
+      color: #fff;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fortune Teller Game</h1>
+    <p>Please enter your name and date of birth to get your fortune:</p>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="date" id="dob" placeholder="Date of Birth">
+    <button onclick="getFortune()">Get Fortune</button>
+    <p id="fortune"></p>
+    <button id="resetBtn" onclick="resetGame()">Play Again</button>
+  </div>
+
+  <script>
+    const fortunes = [
+      'Yes, definitely.',
+      'Most likely.',
+      'Outlook good.',
+      'Signs point to yes.',
+      'Ask again later.',
+      'Cannot predict now.',
+      'Concentrate and ask again.',
+      'Don\'t count on it.',
+      'My sources say no.',
+      'Outlook not so good.',
+      'Very doubtful.',
+      'Better not tell you now.'
+    ];
+
+    function getFortune() {
+      const name = document.getElementById('name').value;
+      const dob = document.getElementById('dob').value;
+
+      if (!name || !dob) {
+        alert('Please enter your name and date of birth.');
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * fortunes.length);
+      const fortune = fortunes[randomIndex];
+      document.getElementById('fortune').innerText = `${name}, your fortune is: ${fortune}`;
+      document.getElementById('resetBtn').style.display = 'block';
+      animateFortune();
+    }
+
+    function animateFortune() {
+      const fortuneElement = document.getElementById('fortune');
+      fortuneElement.style.animation = 'fadeIn 1s';
+      setTimeout(() => {
+        fortuneElement.style.animation = '';
+      }, 1000);
+    }
+
+    function resetGame() {
+      document.getElementById('name').value = '';
+      document.getElementById('dob').value = '';
+      document.getElementById('fortune').innerText = '';
+      document.getElementById('resetBtn').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
