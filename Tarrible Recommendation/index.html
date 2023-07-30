@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terrible Recommendation Generator</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid #333;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+
+    label {
+      margin: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4285F4;
+      color: #fff;
+    }
+
+    .terrible-recommendation {
+      margin-top: 20px;
+      font-size: 20px;
+      text-align: center;
+      animation: fadeIn 1s;
+    }
+
+    .terrible-review {
+      margin-top: 10px;
+      font-size: 16px;
+      text-align: center;
+      color: #666;
+    }
+
+    img {
+      max-width: 300px;
+      max-height: 200px;
+      margin-top: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      display: block;
+      object-fit: cover;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Terrible Recommendation Generator</h2>
+    <label>
+      <input type="checkbox" id="series"> Series
+    </label>
+    <label>
+      <input type="checkbox" id="movies"> Movies
+    </label>
+    <label>
+      <input type="checkbox" id="games"> Games
+    </label>
+    <label>
+      <input type="checkbox" id="books"> Books
+    </label>
+    <label>
+      <input type="checkbox" id="anime"> Anime
+    </label>
+
+    <!-- Theme Customization -->
+    <div>
+      <label for="themeSelect">Choose Theme:</label>
+      <select id="themeSelect" onchange="applyTheme(this.value)">
+        <option value="#fff">Light</option>
+        <option value="#000">Dark</option>
+        <option value="#F44336">Red</option>
+        <option value="#4CAF50">Green</option>
+        <option value="#3F51B5">Blue</option>
+        <option value="#FF9800">Orange</option>
+      </select>
+    </div>
+
+    <button onclick="generateRecommendation()">Get Terrible Recommendation</button>
+    <p class="terrible-recommendation" id="result"></p>
+    <p class="terrible-review" id="review"></p>
+
+    <!-- Refresh Button -->
+    <button onclick="refreshRecommendation()">Refresh</button>
+    <img src="" alt="Terrible Recommendation Image" id="recommendationImage">
+  </div>
+  <script>
+    const customSearchApiKey = 'AIzaSyDw4kJhR5WVJGiPdpe8z8fJ3ejVkHoC6mg';
+    const searchEngineId = '1436689760c194028';
+
+    async function getRandomTerribleImage(query) {
+      const url = `https://www.googleapis.com/customsearch/v1?key=${customSearchApiKey}&cx=${searchEngineId}&q=${encodeURIComponent(query)}&searchType=image`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.items && data.items.length > 0) {
+        const randomIndex = Math.floor(Math.random() * data.items.length);
+        return data.items[randomIndex].link;
+      } else {
+        return 'https://placekitten.com/200/200'; // A placeholder image URL if no image found
+      }
+    }
+
+    function generateReview() {
+       const terribleReviews = [
+        'It was so terrible that I would rather watch paint dry!',
+        'I would give it zero stars if I could. Absolutely awful!',
+        'Worst thing I have ever seen. I wish I could unsee it!',
+        'This was an absolute disaster. Save yourself and avoid it at all costs!',
+        'I felt like I was being punished while watching this. Horrendous!',
+        'One word to describe this: Terrible!',
+        'I would rather stare at a blank wall than experience this again!',
+        'My eyes are still burning from the terrible visuals!',
+        'I don\'t even have words to describe how terrible this was.'
+      ];
+
+      const randomIndex = Math.floor(Math.random() * terribleReviews.length);
+      return terribleReviews[randomIndex];
+    }
+
+    function applyTheme(themeColor) {
+       document.body.style.backgroundColor = themeColor;
+      document.querySelector('.container').style.backgroundColor = themeColor === '#fff' ? '#f9f9f9' : '#fff';
+      document.querySelector('button').style.backgroundColor = themeColor;
+      document.querySelector('button').style.color = themeColor === '#fff' ? '#000' : '#fff';
+    }
+
+    async function generateRecommendation() {
+      const seriesChecked = document.getElementById('series').checked;
+      const moviesChecked = document.getElementById('movies').checked;
+      const gamesChecked = document.getElementById('games').checked;
+      const booksChecked = document.getElementById('books').checked;
+      const animeChecked = document.getElementById('anime').checked;
+
+      const selectedCategories = [];
+      if (seriesChecked) selectedCategories.push('series');
+      if (moviesChecked) selectedCategories.push('movies');
+      if (gamesChecked) selectedCategories.push('games');
+      if (booksChecked) selectedCategories.push('books');
+      if (animeChecked) selectedCategories.push('anime');
+
+      if (selectedCategories.length === 0) {
+        document.getElementById('result').innerText = 'Please select at least one option.';
+        document.getElementById('review').innerText = '';
+      } else {
+        const category = selectedCategories[Math.floor(Math.random() * selectedCategories.length)];
+        const recommendations = terribleRecommendations[category];
+        const randomIndex = Math.floor(Math.random() * recommendations.length);
+        const recommendation = recommendations[randomIndex];
+        const review = generateReview();
+        const imageQuery = `${category} ${recommendation}`;
+        const imageURL = await getRandomTerribleImage(imageQuery);
+
+        document.getElementById('result').innerText = 'Terrible Recommendation: ' + recommendation;
+        document.getElementById('review').innerText = 'Terrible Review: ' + review;
+        document.querySelector('img').src = imageURL;
+      }
+    }
+
+    function refreshRecommendation() {
+       document.getElementById('result').innerText = '';
+      document.getElementById('review').innerText = '';
+      document.querySelector('img').src = ''; // Clear the image
+    }
+
+    const terribleRecommendations = {
+     series: [
+        'Watch "The Room" TV series.',
+        'Binge-watch "Tiger King" repeatedly.',
+        'Endure "Big Bang Theory" marathon.',
+        'Watch "The Roommate" - A cringe-worthy reality show with awkward drama.',
+        'Endure "The Sibling Rivalry" - A poorly acted and scripted family drama.',
+        'Binge-watch "The Mundane Mysteries" - A detective series with predictable plots.',
+        'Suffer through "The Unremarkable Office" - A dull and uninspiring workplace comedy.',
+        'Watch "The House of Boredom" - A slow-paced drama with forgettable characters.',
+        'Endure "The Teenage Turmoil" - A clichéd coming-of-age series with no substance.',
+        'Binge-watch "The Reality Disaster" - A chaotic and mindless reality show.',
+        'Suffer through "The Awkward Encounters" - A cringeworthy rom-com series with terrible dialogue.',
+        'Watch "The Supernatural Misadventures" - A poorly executed fantasy series with cheesy effects.',
+        'Endure "The Lackluster Life" - A boring slice-of-life series with uninteresting plots.',
+    
+      ],
+      movies: [
+      'Watch "Birdemic: Shock and Terror" movie.',
+    'Suffer through "The Room" movie.',
+    'Endure "Plan 9 from Outer Space" movie.',
+    'Watch "Manos: The Hands of Fate" movie.',
+    'Survive "Santa Claus Conquers the Martians" movie.',
+    'Endure "Superbabies: Baby Geniuses 2" movie.',
+    'Watch "Batman & Robin" movie.',
+    'Try to sit through "Gigli" movie.',
+    'Endure "The Last Airbender" movie.',
+    'Watch "Catwoman" movie.',
+    'Suffer through "Jack and Jill" movie.',
+    'Endure "Battlefield Earth" movie.',
+    'Watch "From Justin to Kelly" movie.',
+    'Try to sit through "Troll 2" movie.',
+    'Survive "The Emoji Movie" movie.',
+    'Endure "Jaws: The Revenge" movie.',
+    'Watch "Alone in the Dark" movie.',
+    'Suffer through "Batman v Superman: Dawn of Justice" movie.',
+    'Try to sit through "The Happening" movie.',
+    'Endure "The Roommate" movie.',
+    'Watch "Alvin and the Chipmunks: The Squeakquel" movie.',
+    'Survive "Mortal Kombat: Annihilation" movie.',
+    'Endure "The Wicker Man" movie.',
+    'Watch "Freddy Got Fingered" movie.',
+    'Suffer through "Transformers: Revenge of the Fallen" movie.',
+    'Suffer through "Plan 9 from Outer Space" (1959) - Directed by Ed Wood.',
+    'Endure "Battlefield Earth" (2000) - Directed by Roger Christian.',
+    'Watch "Birdemic: Shock and Terror" (2010) - Directed by James Nguyen.',
+    'Try to sit through "Troll 2" (1990) - Directed by Claudio Fragasso.',
+    'Watch "Batman & Robin" (1997) - Directed by Joel Schumacher.',
+    'Suffer through "Jack and Jill" (2011) - Directed by Dennis Dugan.',
+    'Endure "Superbabies: Baby Geniuses 2" (2004) - Directed by Bob Clark.',
+    'Watch "Gigli" (2003) - Directed by Martin Brest.',
+    'Endure "Catwoman" (2004) - Directed by Pitof.',
+     'Watch "Freddy Got Fingered" (2001) - Directed by Tom Green.',
+  'Try to sit through "Transformers: Revenge of the Fallen" (2009) - Directed by Michael Bay.',
+  'Endure "The Last Airbender" (2010) - Directed by M. Night Shyamalan.',
+  'Watch "From Justin to Kelly" (2003) - Directed by Robert Iscove.',
+  'Suffer through "The Emoji Movie" (2017) - Directed by Tony Leondis.',
+  'Endure "Jaws: The Revenge" (1987) - Directed by Joseph Sargent.',
+  'Try to sit through "The Happening" (2008) - Directed by M. Night Shyamalan.',
+  'Watch "Alone in the Dark" (2005) - Directed by Uwe Boll.',
+  'Suffer through "Transformers: The Last Knight" (2017) - Directed by Michael Bay.',
+  'Endure "Movie 43" (2013) - Directed by Various Directors.',
+      ],
+      games: [
+    'Endure "Bubsy 3D" game - A platformer with terrible controls and camera.',
+    'Play "Superman 64" game - Experience glitchy graphics and frustrating gameplay.',
+    'Try "Ride to Hell: Retribution" game - A broken and poorly designed action-adventure.',
+    'Endure "Sonic Boom: Rise of Lyric" game - A buggy and uninspired Sonic title.',
+    'Play "Dr. Jekyll and Mr. Hyde" game - A confusing and unplayable mess.',
+    'Try "E.T. the Extra-Terrestrial" game - Infamous for being one of the worst games of all time.',
+    'Endure "Big Rigs: Over the Road Racing" game - A racing game with laughably bad physics.',
+    'Play "Leisure Suit Larry: Box Office Bust" game - A cringe-inducing adventure with terrible humor.',
+    'Try "Rogue Warrior" game - A generic and buggy first-person shooter.',
+    'Endure "Charlie\'s Angels" game (2003) - A poorly made tie-in with limited gameplay.',
+
+      ],
+      books: [
+        'Read "Fifty Shades of Grey" book.',
+        'Force yourself through "Twilight" saga.',
+        'Try to finish "The Eye of Argon" novel.',
+        'Read "The Painful Protagonist" - A poorly written and clichéd young adult novel.',
+    'Try "The Mundane Mystery" - A detective novel with predictable plots and one-dimensional characters.',
+    'Endure "The Love Triangle Troubles" - A romance novel with cringeworthy dialogue and unrealistic relationships.',
+    'Read "The Boring Fantasy World" - An unoriginal fantasy book with bland world-building.',
+    'Try "The Awkward Encounters" - A poorly crafted collection of short stories with no substance.',
+    'Endure "The Tiresome Tome" - A long and tedious novel with no compelling plot.',
+    'Read "The Abysmal Adventure" - A poorly executed adventure novel with forgettable characters.',
+    'Try "The Lackluster Literary Work" - A pretentious and dull literary fiction book.',
+    'Endure "The Supernatural Snooze Fest" - A fantasy book with clichéd magical elements.',
+    'Read "The Mundane Memoir" - An autobiography with uninteresting anecdotes and no depth.',
+    
+      ],
+      anime: [
+        'Watch "Pupa" anime series.',
+        'Endure "Mars of Destruction" OVA.',
+        'Survive "Skelter Heaven" anime.',
+         'Watch "The Boring Adventures" - A generic and uninteresting anime with no memorable characters.',
+    'Endure "The Clichéd High School" - A typical high school anime with overused tropes.',
+    'Binge-watch "The Lackluster Fantasy World" - An anime with a poorly developed fantasy setting.',
+    "Suffer through 'The Annoying Protagonist' - An anime with a protagonist that's hard to root for.",
+    'Watch "The Bland Romance" - A romance anime with no chemistry between the characters.',
+    'Endure "The Incoherent Plot" - An anime with a confusing and nonsensical storyline.',
+    'Binge-watch "The Mediocre Mecha" - An uninspired mecha anime with forgettable battles.',
+    'Suffer through "The Unremarkable Slice of Life" - An anime with mundane and uninteresting everyday events.',
+    'Watch "The Repetitive Shounen" - A shounen anime with predictable and repetitive fights.',
+    'Endure "The Forgettable Isekai" - An isekai anime with a forgettable and generic world.',
+   
+      ]
+    };
+  </script>
+</body>
+</html>
