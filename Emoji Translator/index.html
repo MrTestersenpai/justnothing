@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Translator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .output {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Emoji Translator</h1>
+    <input type="text" id="inputText" placeholder="Enter your text here...">
+    <button id="translateBtn">Translate</button>
+    <div class="output" id="outputEmoji"></div>
+  </div>
+
+  <script>
+    const translations = {
+     "hello": "👋",
+  "world": "🌍",
+  "happy": "😄",
+  "sad": "😢",
+  "love": "❤️",
+  "like": "👍",
+  "dislike": "👎",
+  "laugh": "😂",
+  "cool": "😎",
+  "angry": "😠",
+  "surprised": "😮",
+  "confused": "😕",
+  "sleepy": "😴",
+  "crying": "😭",
+  "kiss": "💋",
+  "heart": "💖",
+  "star": "⭐️",
+  "fire": "🔥",
+  "thumbsup": "👍",
+  "thumbsdown": "👎",
+  "clap": "👏",
+  "rocket": "🚀",
+  "cake": "🍰",
+  "sun": "☀️",
+  "moon": "🌙",
+  "rainbow": "🌈",
+      // Add more translations as needed
+    };
+
+    function translateText() {
+      const inputText = document.getElementById("inputText").value.toLowerCase();
+      const outputEmoji = document.getElementById("outputEmoji");
+      let translatedText = "";
+
+      const words = inputText.split(" ");
+      for (const word of words) {
+        if (translations[word]) {
+          translatedText += translations[word] + " ";
+        } else {
+          translatedText += word + " ";
+        }
+      }
+
+      outputEmoji.textContent = translatedText.trim();
+    }
+
+    const translateBtn = document.getElementById("translateBtn");
+    translateBtn.addEventListener("click", translateText);
+  </script>
+</body>
+</html>
