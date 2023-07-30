@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake Hacker Console</title>
+    <style>
+         body {
+            margin: 0;
+            background-color: #000;
+            color: #0f0;
+            font-family: "Courier New", monospace;
+            font-size: 18px;
+            line-height: 1.2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Set body height to fill the viewport */
+        }
+
+        #console {
+            width: 80%;
+            max-width: 800px;
+            border: 2px solid #0f0;
+            padding: 10px;
+            background-color: #222;
+            overflow: auto;
+            height: 80vh; /* Set the console height to 80% of the viewport height */
+        }
+    </style>
+</head>
+<body>
+    <h1>Hoker Console</h1>
+    <div id="console"></div>
+
+    <script>
+        const consoleElement = document.getElementById('console');
+
+        // Function to generate random characters for the console
+        function generateRandomCharacters() {
+            const characters = '!@#$%^&*()_+-=[]{}|;:,.<>?/"\'\\`~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            return characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+
+        // Function to add random characters to the console periodically
+        function fillConsole() {
+            setInterval(function() {
+                const lines = Math.floor(Math.random() * 5) + 1;
+                for (let i = 0; i < lines; i++) {
+                    const line = document.createElement('div');
+                    for (let j = 0; j < 80; j++) {
+                        line.textContent += generateRandomCharacters();
+                    }
+                    consoleElement.appendChild(line);
+                }
+                consoleElement.scrollTop = consoleElement.scrollHeight;
+            }, 100);
+        }
+
+        fillConsole();
+    </script>
+</body>
+</html>
