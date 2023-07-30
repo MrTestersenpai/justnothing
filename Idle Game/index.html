@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idle Clicker Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .points-display {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Idle Clicker Game</h1>
+    <p class="points-display">Points: <span id="pointsDisplay">0</span></p>
+    <button onclick="clickButton()">Click Me!</button>
+    <p>Click Power: <span id="clickPowerDisplay">1</span></p>
+    <button onclick="upgradeClickPower()">Upgrade Click Power - Cost: <span id="upgradeCostDisplay">10</span></button>
+    <p>Auto Clickers: <span id="autoClickersDisplay">0</span></p>
+    <button onclick="buyAutoClicker()">Buy Auto Clicker - Cost: <span id="autoClickerCostDisplay">100</span></button>
+    <hr>
+    <h2>Achievements</h2>
+    <ul id="achievementsList">
+      <!-- Achievements will be displayed here -->
+    </ul>
+  </div>
+
+  <script>
+    let points = 0;
+    let clickPower = 1;
+    let upgradeCost = 10;
+    let autoClickers = 0;
+    let autoClickerCost = 100;
+    let autoClickerPower = 1;
+
+    let achievements = [
+      { name: "Don't you Have better things to do?", pointsRequired: 10, unlocked: false },
+      { name: "Really?", pointsRequired: 100, unlocked: false },
+      { name: "You are still Playing?", pointsRequired: 1000, unlocked: false },
+      { name: "Stop Playing", pointsRequired: 10000, unlocked: false },
+      { name: "I have nothing to say", pointsRequired: 100000, unlocked: false },
+      { name: "Go Out Side", pointsRequired: 1000000, unlocked: false },
+      { name: "Touch Some Grass", pointsRequired: 10000000, unlocked: false },
+      { name: "Are You Lifeless?", pointsRequired: 100000000, unlocked: false },
+       { name: "Ok, You are Lifeless?", pointsRequired: 1000000000, unlocked: false },
+      // Add more achievements here
+    ];
+
+    function updateDisplays() {
+      document.getElementById("pointsDisplay").textContent = points;
+      document.getElementById("clickPowerDisplay").textContent = clickPower;
+      document.getElementById("upgradeCostDisplay").textContent = upgradeCost;
+      document.getElementById("autoClickersDisplay").textContent = autoClickers;
+      document.getElementById("autoClickerCostDisplay").textContent = autoClickerCost;
+      updateAchievementsList();
+    }
+
+    function clickButton() {
+      points += clickPower;
+      updateDisplays();
+      checkAchievements();
+    }
+
+    function upgradeClickPower() {
+      if (points >= upgradeCost) {
+        points -= upgradeCost;
+        clickPower++;
+        upgradeCost *= 2;
+        updateDisplays();
+        checkAchievements();
+      }
+    }
+
+    function buyAutoClicker() {
+      if (points >= autoClickerCost) {
+        points -= autoClickerCost;
+        autoClickers++;
+        autoClickerCost = Math.ceil(autoClickerCost * 1.5); // Increase cost by 50%
+        updateDisplays();
+        checkAchievements();
+      }
+    }
+
+    // Auto-clicker logic (Same as before)
+    function autoClickerTick() {
+      points += autoClickers * autoClickerPower;
+      updateDisplays();
+    }
+
+    // Set auto-clickers to click every 2 seconds
+    setInterval(autoClickerTick, 2000);
+
+    function updateAchievementsList() {
+      const achievementsList = document.getElementById("achievementsList");
+      achievementsList.innerHTML = "";
+
+      achievements.forEach((achievement) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = achievement.name + " - " + (achievement.unlocked ? "Unlocked" : "Locked");
+        if (achievement.unlocked) {
+          listItem.style.color = "green";
+        }
+        achievementsList.appendChild(listItem);
+      });
+    }
+
+    function checkAchievements() {
+      achievements.forEach((achievement) => {
+        if (!achievement.unlocked && points >= achievement.pointsRequired) {
+          achievement.unlocked = true;
+          // Implement any reward logic here (e.g., bonus points, special effects)
+          updateAchievementsList();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
