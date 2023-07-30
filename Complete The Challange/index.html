@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Challenge Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .challenge {
+            background-color: #333;
+            padding: 20px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .difficulty {
+            margin: 10px 0;
+        }
+
+        #generateButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #generateButton:hover {
+            background-color: #0056b3;
+        }
+
+        #challengeText {
+            font-size: 20px;
+        }
+
+        /* Custom dropdown styles */
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            outline: none;
+            background-color: #444;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Styling the arrow in the dropdown */
+        select::-ms-expand {
+            display: none;
+        }
+
+        select:hover {
+            border-color: #0056b3;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Challenge Generator</h1>
+        <div class="challenge">
+            <p id="challengeText">Click the button to get a random challenge!</p>
+            <div class="difficulty">
+                <label for="difficultySelect">Select Challenge Difficulty:</label>
+                <select id="difficultySelect">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <button id="generateButton" onclick="generateChallenge()">Generate Challenge</button>
+        </div>
+    </div>
+
+
+    <script>
+        const easyChallenges = [
+            "Watch a funny YouTube video.",
+            "Sing your favorite song out loud.",
+            "Take a selfie with a silly face.",
+            "Draw a picture of your favorite animal.",
+            "Tell a joke to someone.",
+            "Post you are crazy in facebook.",
+            "Deactivate your Insta.",
+            "Beg someone online for money.",
+            "Go to youtube.com and watch a video about how to tie a tie.",
+            "Get a life.",
+            "Go outside and touch some grass",
+            "Read a short story.",
+            "Text your crush",
+            "Drink a glass of water",
+            "Watch latest Mr beast Video",
+            "Binge Over The Garden Wall",
+            "Watch Titanic",
+            "Solve a simple math equation",
+            "Spell a three-letter word backward",
+        ];
+
+        const mediumChallenges = [
+            "Do 10 jumping jacks in public.",
+            "Ask a stranger for a high-five.",
+            "Dance to a random song on the street.",
+            "Compliment three people you meet today.",
+            "Write a short poem about your day.",
+            "Binge Death Note",
+            "Watch 5 videos minimum length of eatch video must contain 30 mins",
+            "Watch a youtuber you don't like for 1 hours",
+            "Spend time with the friend you most dislike, minimum time 2 hours",
+            "No entertainment for 1 day",
+            "Watch every avengers",
+            "Watch Hungergame series",
+            "Watch every harry potter movie",
+            "Read for 4 hours",
+            "Study for 3 hours",
+            "Write a story containing 10k words",
+            "Make a game",
+            "Make a Burger",
+            "Drink 1 liter of water",
+            "Go Outside and spend the day there",
+            "Run for 2 miles",
+            "Walk 10k steps",
+            "Watch a 3 Cocomelon videos",
+            "Listen a song you dislike",
+            "Confess your feelings to a loved one",
+        ];
+
+        const hardChallenges = [
+            "Perform a funny dance in a crowded area.",
+            "Start a conversation with a random stranger.",
+            "Do a cartwheel in a public park.",
+            "Imitate your favorite celebrity in front of friends.",
+            "Make a short comedy skit and share it on social media.",
+            "Write a ebook",
+            "Learn a software",
+            "Learn a Skill",
+            "Write a novel containing 100k words",
+            "Invite your friend and family and make food yourself for them",
+            "Caught Up to One Piece",
+            "Binge Lord of the rings",
+            "Binge Game of throns",
+            "Complete Dark Souls",
+            "Read Harry Potter",
+            "Read Beserk",
+            "Propose to your crush",
+            "Make a software",
+            "Make a website",
+            "Watch one youtuber for 10 hours",
+            "Watch Dream/Lifesteal SMP Contain for 10 hours",
+            "Do something exeptional",
+            "Start a buissness and make 100$",
+            "Get 100 subs on a new channal in youtube",
+            "Get 1k instagram followers in a new account",
+            "Workout for 1 week",
+            "Have a good diet for 1 mounth",
+            "Don't watch porn for 21 days",
+        ];
+
+        function getRandomChallenge(difficulty) {
+            let challenges;
+
+            switch (difficulty) {
+                case "easy":
+                    challenges = easyChallenges;
+                    break;
+                case "medium":
+                    challenges = mediumChallenges;
+                    break;
+                case "hard":
+                    challenges = hardChallenges;
+                    break;
+                default:
+                    challenges = easyChallenges;
+            }
+
+            return challenges[Math.floor(Math.random() * challenges.length)];
+        }
+
+        function generateChallenge() {
+            const difficulty = document.getElementById("difficultySelect").value;
+            const challengeText = document.getElementById("challengeText");
+            challengeText.textContent = getRandomChallenge(difficulty);
+        }
+    </script>
+</body>
+</html>
