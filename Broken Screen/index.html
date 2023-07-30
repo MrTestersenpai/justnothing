@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Broken Screen Prank</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Hide horizontal and vertical scrollbars */
+        }
+
+        #brokenScreen {
+            width: 100%;
+            height: 100vh; /* Set screen height to fill the viewport */
+            background-image: url('crack.jpg'); /* Replace with your cracked screen image */
+            background-size: cover;
+            animation: shakeScreen 0.1s infinite;
+        }
+
+        @keyframes shakeScreen {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(5px, -5px); }
+            50% { transform: translate(-5px, 5px); }
+            75% { transform: translate(5px, 5px); }
+            100% { transform: translate(-5px, -5px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="brokenScreen"></div>
+
+    <script>
+        // Prevent users from closing the window
+        window.addEventListener('beforeunload', function(e) {
+            e.returnValue = 'Your screen is broken! Are you sure you want to leave?';
+        });
+    </script>
+</body>
+</html>
