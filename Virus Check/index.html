@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake Virus Alert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        p {
+            color: #333;
+        }
+
+        #virusScanAnimation {
+            font-size: 24px;
+        }
+
+        #funnyMessage {
+            font-size: 20px;
+            color: green;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #downloadButton {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #00cc66;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>WARNING: Your Computer is Infected!</h1>
+    <p>Do not close this window. We are scanning your computer for viruses...</p>
+    <div id="virusScanAnimation">Scanning...</div>
+    <div id="funnyMessage"></div>
+    <button id="downloadButton" onclick="downloadAntivirus()">Download Anti-Virus</button>
+
+    <script>
+        // Fake virus scanning animation
+        const virusScanAnimation = document.getElementById('virusScanAnimation');
+        let scanningInterval = setInterval(function() {
+            virusScanAnimation.textContent += '.';
+        }, 1000);
+
+        // Display fake virus alert after a few seconds
+        setTimeout(function() {
+            clearInterval(scanningInterval);
+            virusScanAnimation.textContent = 'Scan Complete! Virus Found!';
+            document.body.style.backgroundColor = 'black';
+            document.body.style.color = 'red';
+
+            // Perform funny actions after virus found
+            setTimeout(function() {
+                showFunnyMessage();
+                showDownloadButton();
+            }, 2000);
+        }, 5000);
+
+        // Function to show a funny message
+        function showFunnyMessage() {
+            const funnyMessage = document.getElementById('funnyMessage');
+            funnyMessage.textContent = 'Download this file now or, your computer will be dead';
+            funnyMessage.style.display = 'block';
+        }
+
+        // Function to show the download button
+        function showDownloadButton() {
+            const downloadButton = document.getElementById('downloadButton');
+            downloadButton.style.display = 'block';
+        }
+
+        // Function to download the antivirus.txt file
+        function downloadAntivirus() {
+            const fileContent = 'It was a prank!';
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'antivirus.txt';
+            a.click();
+
+            // Clean up the object URL
+            setTimeout(function() {
+                URL.revokeObjectURL(url);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
