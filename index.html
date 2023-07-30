@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Just Nothing</title>
+<style type="text/css">
+figure {
+  display: grid;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  /* Set width to 60% of the height to achieve 3:5 ratio */
+  width: calc(60vh);
+  position: relative; /* Add this to position the figcaption */
+}
+figure > * {
+  grid-area: 1/1;
+  transition: .4s;
+}
+figure figcaption {
+  display: grid; /* Add this to expand the figcaption width */
+  align-items: end; /* Align the text to the bottom */
+  font-family: sans-serif;
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #0000;
+  padding: .75rem;
+  background: var(--c,#0009);
+  clip-path: inset(0 var(--_i,100%) 0 0);
+  -webkit-mask:
+    linear-gradient(#000 0 0),
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  -webkit-mask-clip: text, padding-box;
+  margin: -1px;
+  width: 100%; /* Match the figcaption width with the figure width */
+}
+figure:hover figcaption{
+  --_i: 0%;
+}
+figure:hover img {
+  /* Enlarge the image by 50% */
+  transform: scale(1.5);
+}
+@supports not (-webkit-mask-clip: text) {
+  figure figcaption {
+   -webkit-mask: none;
+   color: #fff;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-auto-flow: column;
+  place-content: center;
+  background: #696969;
+}
+/* Style for the link */
+.card-link {
+    text-decoration: none; /* Remove the underline on the link */
+    
+}
+.card {
+  width: 17em;
+  height: 22.5em;
+  background: #171717;
+  transition: 1s ease-in-out;
+  clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card span {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  display: block;
+  font-size: 1em;
+}
+
+.card .info {
+  font-weight: 400;
+  color: white;
+  display: block;
+  text-align: center;
+  font-size: 0.72em;
+  margin: 1em;
+}
+
+.card .img {
+  width: 4.8em;
+  height: 4.8em;
+  background: white;
+  border-radius: 15px;
+  margin: auto;
+}
+
+.card .share {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.card a {
+  color: white;
+  transition: .4s ease-in-out;
+}
+
+.card a:hover {
+  color: red;
+}
+
+.card button {
+  padding: 0.8em 1.7em;
+  display: block;
+  margin: auto;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+  transition: .4s ease-in-out;
+}
+
+.card button:hover {
+  background: red;
+  color: white;
+  cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+<ul>
+<a class="card-link" href="Am I Alive Check/index.html">
+    <figure>
+        <img src="Am I Alive Check/thumbnail.png" alt="Am I Alive Check">
+        <figcaption>Am I Alive Check</figcaption>
+    </figure>
+</a>
+<a class="card-link" href="Bad Joke/index.html">
+<figure>
+    <img src="Bad Joke/thumbnail.png" alt="Bad Joke Repo">
+    <figcaption>Bad Joke Repo</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Broken Screen/index.html">
+<figure>
+    <img src="Broken Screen/thumbnail.png" alt="Broken Screen">
+    <figcaption>Broken Screen</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Complete The Challange/index.html">
+<figure>
+    <img src="Complete The Challange/thumbnail.png" alt="Complete The Challange">
+    <figcaption>Complete The Challange</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Bubble/index.html">
+<figure>
+    <img src="Bubble/thumbnail.png" alt="Bubble Shoot">
+    <figcaption>Bubble Shoot</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Emoji Translator/index.html">
+<figure>
+    <img src="Emoji Translator/thumbnail.png" alt="Emoji Translator">
+    <figcaption>Emoji Translator</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Feel Like Hoker/index.html">
+<figure>
+    <img src="Feel Like Hoker/thumbnail.png" alt="Feel Like Hoker">
+    <figcaption>Feel Like Hoker</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Fortune teller/index.html">
+<figure>
+    <img src="Fortune teller/thumbnail.png" alt="Fortune teller">
+    <figcaption>Fortune teller</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Guess The Number/index.html">
+<figure>
+    <img src="Guess The Number/thumbnail.png" alt="Guess The Number">
+    <figcaption>Guess The Number</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Guess The Show/index.html">
+<figure>
+    <img src="Guess The Show/thumbnail.png" alt="Guess The Show">
+    <figcaption>Guess The Show</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Hangman/index.html">
+<figure>
+    <img src="Hangman/thumbnail.png" alt="Hangman">
+    <figcaption>Hangman</figcaption>
+</figure>
+</a>
+<a class="card-link" href="I am Bored/index.html">
+<figure>
+    <img src="I am Bored/thumbnail.png" alt="I am Bored">
+    <figcaption>I am Bored</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Idle Game/index.html">
+<figure>
+    <img src="Idle Game/thumbnail.png" alt="Idle Game">
+    <figcaption>Idle Game</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Mood Scanner Emoji/index.html">
+<figure>
+    <img src="Mood Scanner Emoji/thumbnail.png" alt="Mood Scanner Emoji">
+    <figcaption>Mood Scanner Emoji</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Lights Out/index.html">
+<figure>
+    <img src="Lights Out/thumbnail.png" alt="Lights Out">
+    <figcaption>Lights Out</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Random Cat Image Genarator/index.html">
+<figure>
+    <img src="Random Cat Image Genarator/thumbnail.png" alt="Random Cat Image Genarator">
+    <figcaption>Random Cat Image Genarator</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Random Game/index.html">
+<figure>
+    <img src="Random Game/thumbnail.png" alt="Random Game">
+    <figcaption>Random Game</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Random Plot Genarator/index.html">
+<figure>
+    <img src="Random Plot Genarator/thumbnail.png" alt="Random Plot Genarator">
+    <figcaption>Random Plot Genarator</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Random Trivia/index.html">
+<figure>
+    <img src="Random Trivia/thumbnail.png" alt="Random Trivia">
+    <figcaption>Random Trivia</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Rock Paper Sissors/index.html">
+<figure>
+    <img src="Rock Paper Sissors/thumbnail.png" alt="Rock Paper Sissors">
+    <figcaption>Rock Paper Sissors</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Tap Game/index.html">
+<figure>
+    <img src="Tap Game/thumbnail.png" alt="Tap Game">
+    <figcaption>Tap Game</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Tarrible Recommendation/index.html">
+<figure>
+    <img src="Tarrible Recommendation/thumbnail.png" alt="Tarrible Recommendation">
+    <figcaption>Tarrible Recommendation</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Type/index.html">
+<figure>
+    <img src="Type/thumbnail.png" alt="Typing game">
+    <figcaption>Typing game</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Virus Check/index.html">
+<figure>
+    <img src="Virus Check/thumbnail.png" alt="Virus Check">
+    <figcaption>Virus Check</figcaption>
+</figure>
+</a>
+<a class="card-link" href="Weird Translator/index.html">
+<figure>
+    <img src="Weird Translator/thumbnail.png" alt="Weird Translator">
+    <figcaption>Weird Translator</figcaption>
+</figure>
+</a>
+</ul>
+</div>
+</body>
+</html>
