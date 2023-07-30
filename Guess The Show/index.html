@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terrible Series Guessing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      text-align: center;
+      border: 2px solid #333;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+
+    h1 {
+      margin: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4285F4;
+      color: #fff;
+    }
+
+    input {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1a1a1a;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #333;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #333;
+}
+
+h2 {
+  color: #fff;
+}
+
+label {
+  margin: 10px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4285F4;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #357ae8;
+}
+
+.terrible-recommendation,
+.terrible-review {
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+}
+
+img {
+  max-width: 300px;
+  max-height: 200px;
+  margin-top: 20px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+}
+
+#themeSelect {
+  background-color: #fff;
+  color: #000;
+}
+
+.container.dark-mode {
+  background-color: #1a1a1a;
+}
+
+.container.dark-mode h2,
+.container.dark-mode label,
+.container.dark-mode .terrible-recommendation,
+.container.dark-mode .terrible-review {
+  color: #fff;
+}
+
+.container.dark-mode button {
+  background-color: #4285F4;
+  color: #fff;
+}
+
+.container.dark-mode button:hover {
+  background-color: #357ae8;
+}
+
+.container.dark-mode img {
+  border: 2px solid #fff;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Terrible Series Guessing Game</h1>
+    <p id="description">Can you guess the terrible series based on the description?</p>
+    <button onclick="startGame()">Start Game</button>
+    <div id="result"></div>
+    <input type="text" id="guessInput" style="display: none;">
+    <button onclick="guessSeries()" id="guessButton" style="display: none;">Guess</button>
+    <button onclick="playAgain()" style="display: none;">Play Again</button>
+  </div>
+  <script>
+    // List of terrible series with their descriptions
+    const terribleSeries = [
+      { name: "Game Of Thrones", description: "A fantasy series filled with confusing plotlines and unsatisfying endings." },
+      { name: "Breaking Bad", description: "A show about a chemistry teacher turned meth cook, but the pacing is slow." },
+      { name: "Money Heist", description: "A heist series with over-the-top characters and unrealistic plans." },
+      { name: "Naruto", description: "An anime with endless filler episodes and repetitive battles." },
+      { name: "Attack On Titan", description: "A series about giant humanoid creatures attacking walls repeatedly." },
+      { name: "Death Note", description: "An anime where a notebook can kill people, but it becomes a convoluted mess." },
+      { name: "Young Sheldon", description: "A spin-off series with a child genius, but the humor is lacking." },
+      { name: "Vikings", description: "A historical drama with gratuitous violence but weak character development." },
+      { name: "The Lord of the Rings", description: "A fantasy series with a confusing plot and too many characters." },
+      { name: "Peaky Blinders", description: "A gangster drama with clichéd plotlines and predictable twists." },
+      { name: "The Last Kingdom", description: "A historical drama with wooden acting and dull storytelling." },
+      { name: "Witcher", description: "A fantasy series with confusing timelines and inconsistent world-building." },
+      { name: "Lookism", description: "An anime with a promising premise but lacks depth and character development." },
+      { name: "The Boys", description: "A superhero series with excessive gore and shock value, but little substance." },
+      { name: "Wednesday", description: "A series about a mysterious girl, but the plot is all over the place." },
+      { name: "One Piece", description: "An anime with endless episodes and dragged-out arcs." },
+      { name: "The 100", description: "A series about a group of teenagers making terrible decisions in a post-apocalyptic world." },
+{ name: "The Big Bang Theory", description: "A sitcom filled with forced nerdy jokes and annoying laugh tracks." },
+{ name: "Pretty Little Liars", description: "A drama series where nobody is good at keeping secrets and the plot is always predictable." },
+{ name: "The Vampire Diaries", description: "A supernatural romance series with sparkly vampires and endless love triangles." },
+{ name: "Riverdale", description: "A teen drama that tries too hard to be dark and mysterious but ends up being laughably bad." },
+{ name: "13 Reasons Why", description: "A series that glamorizes serious issues and is more about shock value than meaningful storytelling." },
+{ name: "Gossip Girl", description: "A show about rich and privileged teenagers causing unnecessary drama for no reason." },
+{ name: "The Walking Dead", description: "A never-ending series about zombies with repetitive plotlines and one-dimensional characters." },
+{ name: "Emily in Paris", description: "A clichéd and unrealistic portrayal of life in Paris with a protagonist you'll love to hate." },
+{ name: "Dynasty (2017)", description: "A soap opera filled with overacting and unbelievable plot twists." },
+{ name: "Shadowhunters", description: "A fantasy series with terrible special effects and cringeworthy dialogue." },
+{ name: "Batwoman", description: "A superhero series with a boring and unlikable protagonist." },
+{ name: "Iron Fist", description: "A Marvel series with poor fight choreography and a lackluster storyline." },
+{ name: "Insatiable", description: "A series that tries to be funny but ends up being offensive and tasteless." },
+{ name: "Under the Dome", description: "A sci-fi series with a ridiculous premise and plot holes galore." },
+{ name: "Manifest", description: "A series that starts with an intriguing mystery but quickly becomes repetitive and nonsensical." },
+{ name: "Terra Nova", description: "A time-traveling series with dinosaurs that manages to be boring and uneventful." },
+{ name: "Scream Queens", description: "A horror-comedy series that fails to be scary or funny." },
+{ name: "Chilling Adventures of Sabrina", description: "A dark reimagining of Sabrina the Teenage Witch that is more cringe than creepy." },
+{ name: "Teen Wolf", description: "A supernatural series with cheesy special effects and a lack of character development." },
+{ name: "Catwoman", description: "A superhero movie with terrible CGI and an even worse script." },
+{ name: "Batman & Robin", description: "A Batman movie filled with campy acting and ridiculous costumes." },
+{ name: "The Room", description: "A drama film with awkward acting and a nonsensical plot." },
+{ name: "Jack and Jill", description: "A comedy film with Adam Sandler playing both the titular characters, making it twice as bad." },
+{ name: "Gigli", description: "A romantic comedy with no chemistry between the leads and cringeworthy dialogue." },
+{ name: "Movie 43", description: "A comedy anthology with tasteless and offensive sketches." },
+{ name: "Battlefield Earth", description: "A sci-fi film with terrible special effects and a convoluted plot." },
+{ name: "Superbabies: Baby Geniuses 2", description: "A family film with a nonsensical storyline and poorly animated babies." },
+{ name: "The Emoji Movie", description: "An animated film that is just a cash grab and a terrible representation of emojis." },
+{ name: "Jaws: The Revenge", description: "A shark movie with laughable special effects and a ridiculous revenge plot." },
+{ name: "From Justin to Kelly", description: "A musical film with forgettable songs and cringe-worthy dance numbers." },
+{ name: "The Happening", description: "A thriller film with a laughably bad premise and wooden acting." },
+{ name: "Alone in the Dark", description: "A horror film with terrible direction and incomprehensible editing." },
+{ name: "The Last Airbender", description: "A live-action adaptation of the beloved animated series that completely misses the mark." },
+{ name: "Troll 2", description: "A horror film with no trolls and no connection to the first movie." },
+{ name: "Freddy Got Fingered", description: "A comedy film with crude humor that misses the mark entirely." },
+{ name: "The Love Guru", description: "A comedy film with offensive stereotypes and jokes that fall flat." },
+{ name: "Disaster Movie", description: "A parody film with dated pop culture references and no actual humor." },
+{ name: "Epic Movie", description: "A parody film that fails to be funny and is just a string of lazy pop culture references." },
+{ name: "Norbit", description: "A comedy film with Eddie Murphy in a fat suit, relying on cheap jokes for laughs." },
+{ name: "Sword Art Online", description: "An anime with a protagonist who is overpowered and unrealistically popular with women." },
+{ name: "Fairy Tail", description: "An anime with repetitive story arcs and shallow character development." },
+{ name: "Tokyo Ghoul", description: "An anime with a confusing plot and gratuitous violence." },
+{ name: "Highschool of the Dead", description: "An anime with excessive fan service and poorly written female characters." },
+{ name: "Sword Art Online II", description: "A sequel to Sword Art Online with the same issues but even more fanservice." },
+{ name: "Bleach", description: "An anime with endless filler episodes and a lack of focus on the main plot." },
+{ name: "Darling in the Franxx", description: "An anime with uncomfortable sexual undertones and a rushed ending." },
+{ name: "Mirai Nikki (Future Diary)", description: "An anime with a confusing time-traveling plot and unlikable characters." },
+{ name: "In Another World with My Smartphone", description: "An isekai anime with a generic and overpowered protagonist." },
+{ name: "Black Clover", description: "An anime with excessive yelling and repetitive battles." },
+{ name: "Death March to the Parallel World Rhapsody", description: "An isekai anime with a bland and forgettable protagonist." },
+{ name: "Diabolik Lovers", description: "An anime with abusive and one-dimensional vampire love interests." },
+{ name: "Eromanga Sensei", description: "An anime with uncomfortable sibling relationships and cringeworthy dialogue." },
+{ name: "Btooom!", description: "An anime with a poorly developed plot and unsatisfying conclusion." },
+{ name: "School Days", description: "An anime with a protagonist who is completely unlikable and makes terrible decisions." },
+{ name: "Guilty Crown", description: "An anime with beautiful animation but a convoluted and confusing storyline." },
+{ name: "Elfen Lied", description: "An anime with gratuitous violence and a lack of depth in its themes." },
+{ name: "Akame ga Kill!", description: "An anime with a high body count and no emotional impact." },
+{ name: "Tokyo Ravens", description: "An anime with a poorly explained magic system and lackluster battles." },
+{ name: "Hand Shakers", description: "An anime with nauseating animation and a plot that makes no sense." },
+
+    ];
+
+    let currentSeriesIndex;
+    let remainingAttempts;
+    const maxAttempts = 3;
+
+    function getRandomSeries() {
+      return terribleSeries[Math.floor(Math.random() * terribleSeries.length)];
+    }
+// Rest of the JS code remains unchanged...
+    // ...
+
+ function startGame() {
+      document.getElementById("description").style.display = "none";
+      document.querySelector("button").style.display = "none";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("guessInput").style.display = "block";
+      document.getElementById("guessButton").style.display = "block";
+      document.getElementById("guessInput").value = "";
+      currentSeriesIndex = terribleSeries.indexOf(getRandomSeries());
+      remainingAttempts = maxAttempts;
+      showDescription();
+    }
+
+    function showDescription() {
+      const seriesDescription = terribleSeries[currentSeriesIndex].description;
+      document.getElementById("result").innerHTML = `
+        <p>Description: ${seriesDescription}</p>
+        <p>Attempts Remaining: ${remainingAttempts}</p>
+      `;
+    }
+
+    function guessSeries() {
+      const guessInput = document.getElementById("guessInput");
+      const guess = guessInput.value.trim();
+      guessInput.value = "";
+      checkGuess(guess);
+    }
+
+    function checkGuess(guess) {
+      const seriesName = terribleSeries[currentSeriesIndex].name;
+      if (guess.toLowerCase() === seriesName.toLowerCase()) {
+        document.getElementById("result").innerHTML = `<p>Correct! It's "${seriesName}"</p>`;
+        document.getElementById("guessInput").style.display = "none";
+        document.getElementById("guessButton").style.display = "none";
+        document.querySelector("button").style.display = "block";
+      } else {
+        remainingAttempts--;
+        if (remainingAttempts === 0) {
+          document.getElementById("result").innerHTML = `<p>Out of attempts. The series was "${seriesName}"</p>`;
+          document.getElementById("guessInput").style.display = "none";
+          document.getElementById("guessButton").style.display = "none";
+          document.querySelector("button").style.display = "block";
+        } else {
+          showDescription();
+        }
+      }
+    }
+
+    function playAgain() {
+      document.getElementById("description").style.display = "block";
+      document.querySelector("button").style.display = "block";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("guessInput").style.display = "none";
+      document.getElementById("guessButton").style.display = "none";
+    }
+    function applyTheme(themeColor) {
+  document.body.style.backgroundColor = themeColor;
+  document.querySelector('.container').style.backgroundColor = themeColor === '#fff' ? '#f9f9f9' : '#333';
+  document.querySelector('button').style.backgroundColor = themeColor;
+  document.querySelector('button').style.color = themeColor === '#fff' ? '#000' : '#fff';
+
+  // Add or remove dark-mode class based on theme selection
+  const container = document.querySelector('.container');
+  if (themeColor === '#1a1a1a') {
+    container.classList.add('dark-mode');
+  } else {
+    container.classList.remove('dark-mode');
+  }
+}
+
+  </script>
+</body>
+</html>
