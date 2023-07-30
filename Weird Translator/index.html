@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weird Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #004d99;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #004d99;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #003366;
+        }
+
+        #translatedText {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weird Translator</h1>
+    <textarea id="inputText" rows="4" cols="50" placeholder="Enter English text to translate"></textarea>
+    <br>
+    <button id="alienButton">Translate to Alien</button>
+    <button id="satanButton">Translate to Satan</button>
+    <button id="pigLatinButton">Translate to Pig Latin</button>
+    <button id="uwuButton">Translate to UwU</button>
+    <button id="reverseButton">Reverse</button>
+    <button id="pirateButton">Translate to Pirate</button>
+    <br>
+    <div id="translatedText"></div>
+
+    <script>
+        // Alien translation logic
+        function alienTranslate(text) {
+            const alienDictionary = {
+                'a': 'α',
+                'b': 'β',
+                'c': '©',
+                'd': 'ð',
+                'e': 'ε',
+                'f': 'ƒ',
+                'g': 'ϱ',
+                'h': 'η',
+                'i': '¡',
+                'j': 'j',
+                'k': 'к',
+                'l': 'ℓ',
+                'm': '₥',
+                'n': 'и',
+                'o': 'ø',
+                'p': 'ρ',
+                'q': 'q',
+                'r': 'r',
+                's': '§',
+                't': '†',
+                'u': 'µ',
+                'v': 'ν',
+                'w': 'ω',
+                'x': 'ж',
+                'y': '¥',
+                'z': 'z'
+            };
+
+            return text
+                .split('')
+                .map(char => alienDictionary[char.toLowerCase()] || char)
+                .join('');
+        }
+
+        // Satan translation logic
+        function satanTranslate(text) {
+            const satanDictionary = {
+                'a': '∀',
+                'b': '฿',
+                'c': '¢',
+                'd': '∂',
+                'e': 'Ɛ',
+                'f': '₣',
+                'g': '₲',
+                'h': 'Ⱨ',
+                'i': '¡',
+                'j': 'ﾌ',
+                'k': 'ӄ',
+                'l': 'Ⱡ',
+                'm': '₥',
+                'n': 'и',
+                'o': 'ø',
+                'p': '₱',
+                'q': 'ǭ',
+                'r': '尺',
+                's': '丂',
+                't': '₮',
+                'u': 'น',
+                'v': '∇',
+                'w': 'Ⱳ',
+                'x': 'ж',
+                'y': '¥',
+                'z': '乙'
+            };
+
+            return text
+                .split('')
+                .map(char => satanDictionary[char.toLowerCase()] || char)
+                .join('');
+        }
+
+        // Pig Latin translation logic
+        function pigLatinTranslate(text) {
+            return text
+                .toLowerCase()
+                .split(' ')
+                .map(word => {
+                    if (word.match(/^[aeiou]/)) {
+                        return word + 'ay';
+                    } else {
+                        const firstVowelIndex = word.indexOf(word.match(/[aeiou]/));
+                        return word.slice(firstVowelIndex) + word.slice(0, firstVowelIndex) + 'ay';
+                    }
+                })
+                .join(' ');
+        }
+
+        // UwU translation logic
+        function uwuTranslate(text) {
+            const uwuDictionary = {
+                'r': 'w',
+    'l': 'w',
+    'you': 'wu',
+    'ove': 'uv',
+    'th': 'd',
+    'this': 'dis',
+    'the': 'da',
+    'that': 'dat',
+    'with': 'wif',
+    'what': 'wat',
+    'when': 'wen',
+    'where': 'whewe',
+    'who': 'whoo',
+    'why': 'why',
+    'do': 'doo',
+    'did': 'did',
+    'does': 'doez',
+    'going': 'gwoing',
+    'to': 'tu',
+    'too': 'tooo',
+    'two': 'twoo',
+    'three': 'thwee',
+    'four': 'fowr',
+    'five': 'fibe',
+    'six': 'swee',
+    'seven': 'sewen',
+    'eight': 'eit',
+    'nine': 'nyne',
+    'zero': 'zewo',
+    'are': 'aw',
+    'and': 'awnd',
+    'me': 'mwe',
+    'my': 'mwy',
+    'love': 'wuv',
+    'please': 'pwese',
+    'good': 'gwood',
+    'great': 'gweat',
+    'amazing': 'amazwing',
+    'awesome': 'awwesome',
+    'cool': 'kewl',
+    'cute': 'cutey',
+    'thank': 'tank',
+    'thanks': 'tanks',
+    'thank you': 'thankies',
+    'happy': 'happwii',
+    'sad': 'sawd',
+    'funny': 'funnie',
+    'hug': 'huggies',
+    'kiss': 'kissies',
+    'sleep': 'sweep',
+    'eat': 'eats',
+    'cookie': 'cooky',
+    'cake': 'caky',
+    'dog': 'doggo',
+    'cat': 'cattie',
+    'bird': 'birdie',
+    'bear': 'beaw',
+    'panda': 'pandie',
+    'unicorn': 'unicown',
+    'rainbow': 'wainbow',
+    'sun': 'sunny',
+    'moon': 'moony',
+    'star': 'staw',
+    'sky': 'skyw',
+    'cloud': 'clowd',
+    'happy birthday': 'happie bithday',
+    'i love you': 'i wuv you',
+    'i miss you': 'i missies you',
+    'i am': 'i amw',
+    'i want': 'i wanty',
+    'i can': 'i canny',
+    'i like': 'i wike',
+    'i see': 'i swee',
+    'i hear': 'i heaw',
+    'i feel': 'i feew',
+    'i know': 'i knowy',
+    'i think': 'i thinky',
+    'i say': 'i sayw',
+    'i don\'t know': 'i dunno',
+    'yes': 'yesh',
+    'no': 'nu',
+    'ok': 'okii',
+    'bye': 'byee',
+    'hello': 'hewwo',
+    'hi': 'hii',
+    'hey': 'heyi',
+    'how are you': 'how aw you',
+    'what\'s up': 'what\'s uwu',
+    'excuse me': 'excuwuze me',
+    'sorry': 'sowwy',
+    'please forgive me': 'pwese fowgive me',
+    'good morning': 'good mowning',
+    'good night': 'good nyight',
+    'sweet dreams': 'swee dweams',
+    'thank you so much': 'thank you so muchy',
+    'you\'re welcome': 'you\'we welcome',
+    'have a great day': 'have a gweat day',
+    'i\'m sorry': 'i\'m sowwy',
+    'i\'m happy': 'i\'m happwii',
+    'i\'m sad': 'i\'m sawd',
+    'i\'m tired': 'i\'m tiwed',
+    'i\'m hungry': 'i\'m hungwy',
+    'i\'m excited': 'i\'m excited',
+    'i\'m in love': 'i\'m in wuv',
+    'i\'m bored': 'i\'m bowed',
+    'i\'m cute': 'i\'m cutey',
+    'i\'m cool': 'i\'m kewl',
+    'i\'m fabulous': 'i\'m fabuwous',
+    'i\'m amazing': 'i\'m amazwing',
+    'i\'m awesome': 'i\'m awwesome',
+    'i\'m a unicorn': 'i\'m a unicown',
+    'i\'m magical': 'i\'m magicaw',
+    'i\'m beautiful': 'i\'m bootiful',
+    'i\'m handsome': 'i\'m handsomw',
+    'i\'m super': 'i\'m supew',
+    'i\'m unique': 'i\'m uniquwe',
+    'i\'m creative': 'i\'m cweative',
+    'i\'m special': 'i\'m speciaw',
+    'i\'m fantastic': 'i\'m fantastic',
+    'i\'m lovely': 'i\'m wovewy',
+    'i\'m wonderful': 'i\'m wondewful',
+    'i\'m kind': 'i\'m kind',
+    'i\'m friendly': 'i\'m fwiendly',
+    'i\'m supportive': 'i\'m suppowtive',
+    'i\'m awesome': 'i\'m awwesome',
+    'i\'m cute': 'i\'m cutey',
+    'i\'m amazing': 'i\'m amazwing',
+    'i\'m loved': 'i\'m woved',
+    'i\'m appreciated': 'i\'m appweciated',
+    'i\'m thankful': 'i\'m thankful',
+    'i\'m happy': 'i\'m happwii',
+    'i\'m grateful': 'i\'m gwateful',
+    'i\'m positive': 'i\'m positivwe',
+    'i\'m optimistic': 'i\'m optimistwic',
+    'i\'m cheerful': 'i\'m cheewful',
+    'i\'m excited': 'i\'m excited',
+    'i\'m in love': 'i\'m in wuv',
+    'i\'m blessed': 'i\'m blesssed',
+    'i\'m strong': 'i\'m stwong',
+    'i\'m brave': 'i\'m bwave',
+    'i\'m smart': 'i\'m smawt',
+    'i\'m confident': 'i\'m confidwent',
+    'i\'m determined': 'i\'m detewmined',
+    'i\'m capable': 'i\'m capabwe',
+    'i\'m powerful': 'i\'m powewful',
+    'i\'m respected': 'i\'m wespected',
+    'i\'m valued': 'i\'m vawued',
+    'i\'m important': 'i\'m impowtant',
+    'i\'m a star': 'i\'m a staw',
+    'i\'m sparkling': 'i\'m spawkling',
+    'i\'m shining': 'i\'m shiny',
+    'i\'m loved': 'i\'m woved',
+    'i\'m appreciated': 'i\'m appweciated',
+    'i\'m wonderful': 'i\'m wondewful',
+    'i\'m unique': 'i\'m uniquwe',
+    'i\'m special': 'i\'m speciaw',
+    'i\'m fantastic': 'i\'m fantastic',
+    'i\'m joyful': 'i\'m joyfuw',
+    'i\'m merry': 'i\'m mewwy',
+    'i\'m funny': 'i\'m funnie',
+    'i\'m adorable': 'i\'m adowable',
+    'i\'m huggable': 'i\'m huggabwe',
+    'i\'m kissable': 'i\'m kissabwe',
+    'i\'m cuddly': 'i\'m cuddwy',
+    'i\'m sweet': 'i\'m sweet',
+    'i\'m kind': 'i\'m kind',
+    'i\'m friendly': 'i\'m fwiendly',
+    'i\'m supportive': 'i\'m suppowtive',
+    'i\'m amazing': 'i\'m amazwing',
+    'i\'m loved': 'i\'m woved',
+    'i\'m appreciated': 'i\'m appweciated',
+    'i\'m thankful': 'i\'m thankful',
+    'i\'m happy': 'i\'m happwii',
+    'i\'m grateful': 'i\'m gwateful',
+    'i\'m positive': 'i\'m positivwe',
+    'i\'m optimistic': 'i\'m optimistwic',
+    'i\'m cheerful': 'i\'m cheewful',
+    'i\'m excited': 'i\'m excited',
+    'i\'m in love': 'i\'m in wuv',
+    'i\'m blessed': 'i\'m blesssed',
+    'i\'m strong': 'i\'m stwong',
+    'i\'m brave': 'i\'m bwave',
+    'i\'m smart': 'i\'m smawt',
+    'i\'m confident': 'i\'m confidwent',
+    'i\'m determined': 'i\'m detewmined',
+    'i\'m capable': 'i\'m capabwe',
+    'i\'m powerful': 'i\'m powewful',
+    'i\'m respected': 'i\'m wespected',
+    'i\'m valued': 'i\'m vawued',
+    'i\'m important': 'i\'m impowtant',
+    'i\'m a star': 'i\'m a staw',
+    'i\'m sparkling': 'i\'m spawkling',
+    'i\'m shining': 'i\'m shiny',
+    'i\'m loved': 'i\'m woved',
+    'i\'m appreciated': 'i\'m appweciated',
+    'i\'m wonderful': 'i\'m wondewful',
+    'i\'m unique': 'i\'m uniquwe',
+    'i\'m special': 'i\'m speciaw',
+    'i\'m fantastic': 'i\'m fantastic',
+    'i\'m joyful': 'i\'m joyfuw',
+    'i\'m merry': 'i\'m mewwy',
+                // ... add more uwu translations ...
+            };
+
+            return text.replace(/\b\w+\b/g, word => uwuDictionary[word.toLowerCase()] || word)
+                .replace(/[\!\.]/g, " uwu" + "$&")
+                .replace(/r/g, "w")
+                .replace(/l/g, "w");
+        }
+
+        // Reverse translation logic
+        function reverseTranslate(text) {
+            return text.split('').reverse().join('');
+        }
+
+        // Pirate translation logic
+        function pirateTranslate(text) {
+            const pirateDictionary = {
+                 'hello': 'ahoy',
+    'hi': 'ahoy',
+    'hey': 'ahoy',
+    'my': 'me',
+    'friend': 'matey',
+    'mate': 'matey',
+    'buddy': 'matey',
+    'crew': 'mateys',
+    'you': 'ye',
+    'your': 'yer',
+    'you\'re': 'ye be',
+    'you are': 'ye be',
+    'is': 'be',
+    'am': 'be',
+    'are': 'be',
+    'were': 'be',
+    'was': 'be',
+    'isn\'t': 'be not',
+    'aren\'t': 'be not',
+    'wasn\'t': 'be not',
+    'weren\'t': 'be not',
+    'will': 'be',
+    'will not': 'won\'t',
+    'won\'t': 'won\'t',
+    'there': 'thar',
+    'is there': 'be there',
+    'are there': 'be there',
+    'over': 'o\'er',
+    'yes': 'aye',
+    'yeah': 'aye',
+    'yep': 'aye',
+    'aye': 'aye aye',
+    'no': 'nay',
+    'nope': 'nay',
+    'never': 'ne\'er',
+    'we': 'us',
+    'us': 'us',
+    'our': 'our',
+    'ours': 'our',
+    'ourselves': 'ourselves',
+    'they': 'they',
+    'them': 'them',
+    'their': 'their',
+    'theirs': 'theirs',
+    'themselves': 'themselves',
+    'me': 'me',
+    'my': 'me',
+    'mine': 'mine',
+    'myself': 'meself',
+    'he': 'he',
+    'him': 'him',
+    'his': 'his',
+    'himself': 'himself',
+    'she': 'she',
+    'her': 'her',
+    'hers': 'hers',
+    'herself': 'herself',
+    'it': 'it',
+    'it\'s': 'its',
+    'its': 'its',
+    'itself': 'itself',
+    'be': 'be',
+    'am': 'be',
+    'is': 'be',
+    'are': 'be',
+    'was': 'be',
+    'were': 'be',
+    'been': 'be',
+    'being': 'bein\'',
+    'me': 'me',
+    'my': 'me',
+    'mine': 'me',
+    'myself': 'meself',
+    'you': 'ye',
+    'your': 'yer',
+    'yours': 'yer',
+    'yourself': 'yerself',
+    'ye': 'ye',
+    'your': 'yer',
+    'yourself': 'yerself',
+    'he': 'he',
+    'his': 'his',
+    'himself': 'himself',
+    'she': 'she',
+    'hers': 'hers',
+    'herself': 'herself',
+    'it': 'it',
+    'its': 'its',
+    'itself': 'itself',
+    'we': 'we',
+    'our': 'our',
+    'ours': 'ours',
+    'ourselves': 'ourselves',
+    'they': 'they',
+    'their': 'their',
+    'theirs': 'theirs',
+    'themselves': 'themselves',
+    'be': 'be',
+    'am': 'be',
+    'is': 'be',
+    'are': 'be',
+    'was': 'be',
+    'were': 'be',
+    'been': 'be',
+    'being': 'bein\'',
+    'with': 'wit\'',
+    'with me': 'wit\' me',
+    'with you': 'wit\' ye',
+    'with your': 'wit\' yer',
+    'with yoursel': 'wit\' yersel',
+    'with him': 'wit\' him',
+    'with his': 'wit\' his',
+    'with himself': 'wit\' himself',
+    'with her': 'wit\' her',
+    'with her': 'wit\' her',
+    'with herself': 'wit\' herself',
+    'with it': 'wit\' it',
+    'with its': 'wit\' its',
+    'with itself': 'wit\' itself',
+    'with us': 'wit\' us',
+    'with our': 'wit\' our',
+    'with ourselves': 'wit\' ourselves',
+    'with them': 'wit\' them',
+    'with their': 'wit\' their',
+    'with themselves': 'wit\' themselves',
+    'to': 't\'',
+    'to me': 't\' me',
+    'to you': 't\' ye',
+    'to your': 't\' yer',
+    'to yourself': 't\' yerself',
+    'to him': 't\' him',
+    'to his': 't\' his',
+    'to himself': 't\' himself',
+    'to her': 't\' her',
+    'to her': 't\' her',
+    'to herself': 't\' herself',
+    'to it': 't\' it',
+    'to its': 't\' its',
+    'to itself': 't\' itself',
+    'to us': 't\' us',
+    'to our': 't\' our',
+    'to ourselves': 't\' ourselves',
+    'to them': 't\' them',
+    'to their': 't\' their',
+    'to themselves': 't\' themselves',
+    'a': 'a',
+    'an': 'a',
+    'the': 'the',
+    'one': 'one',
+    'two': 'two',
+    'three': 'three',
+    'four': 'four',
+    'five': 'five',
+    'six': 'six',
+    'seven': 'seven',
+            };
+
+            return text.replace(/\b\w+\b/g, word => pirateDictionary[word.toLowerCase()] || word);
+        }
+
+        // Add event listeners to the translation buttons after the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('alienButton').addEventListener('click', function() {
+                translate('alien');
+            });
+
+            document.getElementById('satanButton').addEventListener('click', function() {
+                translate('satan');
+            });
+
+            document.getElementById('pigLatinButton').addEventListener('click', function() {
+                translate('pigLatin');
+            });
+
+            document.getElementById('uwuButton').addEventListener('click', function() {
+                translate('uwu');
+            });
+
+            document.getElementById('reverseButton').addEventListener('click', function() {
+                translate('reverse');
+            });
+
+            document.getElementById('pirateButton').addEventListener('click', function() {
+                translate('pirate');
+            });
+        });
+
+        // Modify the translate function to handle all translation options
+        function translate(language) {
+            const inputText = document.getElementById('inputText').value;
+            let translatedText;
+
+            switch (language) {
+                case 'alien':
+                    translatedText = alienTranslate(inputText);
+                    break;
+                case 'satan':
+                    translatedText = satanTranslate(inputText);
+                    break;
+                case 'pigLatin':
+                    translatedText = pigLatinTranslate(inputText);
+                    break;
+                case 'uwu':
+                    translatedText = uwuTranslate(inputText);
+                    break;
+                case 'reverse':
+                    translatedText = reverseTranslate(inputText);
+                    break;
+                case 'pirate':
+                    translatedText = pirateTranslate(inputText);
+                    break;
+                default:
+                    translatedText = inputText;
+                    break;
+            }
+
+            document.getElementById('translatedText').innerText = translatedText;
+        }
+    </script>
+</body>
+</html>
